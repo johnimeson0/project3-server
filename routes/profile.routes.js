@@ -12,7 +12,7 @@ router.get("/your-profile", (req, res, next) => {
 router.get("/view-profile/:id", (req, res, next) => {
     const {id} = req.params
     User.findById(id)
-    .populate('cars posts events')
+    .populate('cars posts events friends')
     .then((users) => res.status(200).json(users))
     .catch((err)=> res.json(err))
     })

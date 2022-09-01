@@ -13,7 +13,7 @@ const storage = new CloudinaryStorage({
   params: {
     allowed_formats: ['jpg', 'png', 'jpeg'],
     folder: 'project3',
-    //resource_type: 'raw'
+    // resource_type: 'auto'
   },
 });
 

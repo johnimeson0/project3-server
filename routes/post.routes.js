@@ -4,7 +4,7 @@ const User = require('../models/User.model');
 
 router.post('/create-post', (req, res, next)=> {
     
-    const {title, body, authorId, imgUrl, likes, comments} = req.body;
+    const {title, body, imgUrl, likes, comments, userId} = req.body;
 
     if (!title) {
         return res
@@ -17,10 +17,13 @@ router.post('/create-post', (req, res, next)=> {
           .json({ errorMessage: "Please provide a body for your post" });
       }
     
-    Post.create({title, body, authorId, imgUrl, likes, comments})
+    Post.create({title, body, imgUrl, likes, comments})
     .then((newPost) => {
-        Post.findByIdAndUpdate(newPost._id, {$push : {authorId: authorId}})
+        return Post.findByIdAndUpdate(newPost._id, {$push : {authorId: userId}})
+    })
+    .then((updatedPost) => {
         return User.findByIdAndUpdate(authorId, {$push : {posts: newPost._id}})
+
     })
         .then((response) => res.json(response))
             .catch((err) => {
