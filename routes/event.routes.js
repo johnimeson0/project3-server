@@ -29,18 +29,18 @@ router.post('/create-event', (req, res, next)=> {
             })
 });
 
-router.get('/', (req, res, next) => {
+router.get('/all', (req, res, next) => {
     Event.find()
-    .populate('author')
+    .populate('authorId')
     .then((events) => res.status(200).json(events))
     .catch((err) => res.json(err))
 });
 
-router.get('/event/:eventId', (req, res, next) => {
-    const {eventId} = req.params;
+router.get('/:id', (req, res, next) => {
+    const {id} = req.params;
 
-    Event.findById(eventId)
-    .populate('author')
+    Event.findById(id)
+    .populate('authorId')
     .then((Events) => res.status(200).json(Events))
     .catch((err)=> res.json(err))
 });

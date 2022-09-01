@@ -29,9 +29,9 @@ router.post('/create-post', (req, res, next)=> {
             })
 });
 
-router.get('/', (req, res, next) => {
+router.get('/all-posts', (req, res, next) => {
     Post.find()
-    .populate('author')
+    .populate('authorId')
     .then((posts) => res.status(200).json(posts))
     .catch((err) => res.json(err))
 });
@@ -40,12 +40,12 @@ router.get('/post/:postId', (req, res, next) => {
     const {postId} = req.params;
 
     Post.findById(postId)
-    .populate('author')
+    .populate('authorId')
     .then((posts) => res.status(200).json(posts))
     .catch((err)=> res.json(err))
 });
 
-router.put('/post/:postId', (req, res, next) => {
+router.put('/edit/:postId', (req, res, next) => {
     const {postId} = req.params;
     const {title, body, authorId, imgUrl, likes, comments} = req.body;
 

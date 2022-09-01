@@ -13,27 +13,27 @@ router.post("/friends-request/:id", async (req, res, next) => {
 
     try {
         /* console.log("Current User Id: ", userId) */
-        
+        const myUser = await User.findById(userId)
+        const otherUser = await User.findById(id)
          await User.findByIdAndUpdate(userId, {
             $push: {
-                friendsSent: id
+                friendsSent: otherUser._id
             }
         }, {new: true});
         
-        const otherUser = await User.findById(id)
 
        
         
-        if (otherUser.friendsRecieved.includes(userId)) {
+        if (otherUser.friendsRecieved.includes(myUser._id)) {
             await User.findByIdAndUpdate(otherUser._id, {
                 $pull: {
-                    friendsRecieved: userId
+                    friendsRecieved: myUser._id
                 },
                 $push: {
-                    friends: userId
+                    friends: myUser._id
                 }
             })
-            await User.findByIdAndUpdate(userId, {
+            await User.findByIdAndUpdate(myUser._id, {
                 $pull: {
                  friendsRecieved: otherUser._id
                  },
@@ -44,7 +44,7 @@ router.post("/friends-request/:id", async (req, res, next) => {
         } else {
             await User.findByIdAndUpdate(id, {
                 $push: {
-                    friendsRecieved: userId
+                    friendsRecieved: myUser._id
                 }
             })
         }
@@ -57,13 +57,38 @@ router.post("/friends-request/:id", async (req, res, next) => {
     }
 });
 
-router.post('/comment-create/:id', (req, res, next) => {
+router.post('/like/:id', async (req, res, next) => {
     console.log("pls work");
     const {id} = req.params;
     const userId = req.payload._id;
 
+    try {
+        /* console.log("Current User Id: ", userId) */
+        const myUser = await User.findById(userId)
+        const post = await Post.findById(id)
+         await Post.findByIdAndUpdate(post._id, {
+            $push: {
+                likes: myUser._id
+            }
+        }, {new: true});
+        res.json(`Your like to the post with id ${post._id} has been sent successfully`);
+    } catch (error) {
+    res.json(error)
+    }
+});
 
+    // try {
+    //     //  const targetPost = await Post.findById(id)
 
-})
+    //     Post.findByIdAndUpdate(id, {
+    //             $push: {
+    //                 likes: userId,
+    //             }
+    //         })
+    //         res.json(`Your friend request to the user with the id ${otherUser._id} has been sent successfully`)
+    //              } catch (error) {
+    //                  res.json(error)
+    //              }
+
 
 module.exports = router;

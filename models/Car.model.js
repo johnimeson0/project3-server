@@ -5,7 +5,8 @@ const carSchema = new Schema({
     make: String,
     model: String,
     year: Number,
-    ownerId: {type: Schema.Types.ObjectId, ref: 'User'},
+    imgUrl: String,
+    ownerId: [{type: Schema.Types.ObjectId, ref: 'User'}],
     likes: Array,
     comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
 })
