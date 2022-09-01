@@ -66,6 +66,7 @@ router.post("/signup", (req, res) => {
           username,
           password: hashedPassword,
           email,
+          favoriteCar: ""
         });
       })
       .then((user) => {
@@ -119,9 +120,9 @@ router.post("/login", (req, res, next) => {
         }
         // important
         //destructuring what we want from the user
-        const { _id, username } = user;
+        const { _id, username, favoriteCar } = user;
         //creating the payload with the properties we want to save on the token
-        const payload = { _id, username };
+        const payload = { _id, username, favoriteCar };
         //creating the token
         const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
           algorithm: 'HS256',
