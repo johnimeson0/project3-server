@@ -6,7 +6,7 @@ const eventSchema = new Schema ({
     body: Array,
     address: String,
     imgUrl: String,
-    authorId: {type: Schema.Types.ObjectId, ref: 'User'},
+    authorId: [{type: Schema.Types.ObjectId, ref: 'User'}],
     likes: Array,
     comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
 })

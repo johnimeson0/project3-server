@@ -4,7 +4,7 @@ const User = require('../models/User.model');
 
 router.post('/create-event', (req, res, next)=> {
     
-    const {title, body, address, authorId, imgUrl, likes, comments} = req.body;
+    const {title, body, address, imgUrl, likes, comments, userId} = req.body;
 
     if (!title) {
         return res
@@ -17,10 +17,12 @@ router.post('/create-event', (req, res, next)=> {
           .json({ errorMessage: "Please provide a body for your event" });
       }
     
-    Event.create({title, body, address, authorId, imgUrl, likes, comments})
+    Event.create({title, body, address, imgUrl, likes, comments})
     .then((newEvent) => {
-        Event.findByIdAndUpdate(newEvent._id, {$push : {authorId: authorId}})
-        return User.findByIdAndUpdate(authorId, {$push : {Events: newEvent._id}})
+        return Event.findByIdAndUpdate(newEvent._id, {$push : {authorId: userId}}, {new: true})
+    })
+    .then((updatedEvent) => {
+        return User.findByIdAndUpdate(userId, {$push : {events: updatedEvent._id}})
     })
         .then((response) => res.json(response))
             .catch((err) => {
