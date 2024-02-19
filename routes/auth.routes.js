@@ -134,8 +134,5 @@ router.post("/login", (req, res, next) => {
     })
 });
 
-<Route path='/linkedin' component={() => {
-    window.location.href = 'https://linkedin.com/in/john-imeson/';
-    return null;
-}}/>
+
 module.exports = router;
