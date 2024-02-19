@@ -10,7 +10,6 @@ router.get("/", (req, res, next) => {
 router.use("/auth", authRoutes);
 
 router.post("/upload", fileUploader.single("fileUrl"), (req, res, next) => {
-  /*   console.log("file is: ", req.file) */
 
   if (!req.file) {
     next(new Error("No file uploaded!"));

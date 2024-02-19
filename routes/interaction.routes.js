@@ -77,18 +77,4 @@ router.post('/like/:id', async (req, res, next) => {
     }
 });
 
-    // try {
-    //     //  const targetPost = await Post.findById(id)
-
-    //     Post.findByIdAndUpdate(id, {
-    //             $push: {
-    //                 likes: userId,
-    //             }
-    //         })
-    //         res.json(`Your friend request to the user with the id ${otherUser._id} has been sent successfully`)
-    //              } catch (error) {
-    //                  res.json(error)
-    //              }
-
-
 module.exports = router;
