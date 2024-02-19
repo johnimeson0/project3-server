@@ -35,7 +35,7 @@ module.exports = (app) => {
   app.use(
     cors({
       credentials: true,
-      origin: process.env.ORIGIN || "http://localhost:3000" || "*" || "https://git.heroku.com/rev-match.git",
+      origin: process.env.ORIGIN || "http://localhost:3000" || "*",
     })
   );
 
