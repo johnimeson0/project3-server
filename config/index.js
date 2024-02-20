@@ -35,7 +35,7 @@ module.exports = (app) => {
   app.use(
     cors({
       credentials: true,
-      origin: process.env.ORIGIN || "http://localhost:3000" || 'https://rev-match-d3aef557ed47.herokuapp.com' || "*" ,
+      origin: process.env.ORIGIN || "http://localhost:3000" || 'https://rev-match-d3aef557ed47.herokuapp.com' || 'https://project3-ji.netlify.app' || "*" ,
     })
   );
 
